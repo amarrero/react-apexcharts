@@ -24,6 +24,6 @@ module.exports = {
       'prop-types': "PropTypes"
     }
   }],
-  external: ['react', 'apexcharts', 'prop-types'],
+  external: ['react', 'apexcharts', 'prop-types', 'lodash'],
   plugins: pluginOptions
 }

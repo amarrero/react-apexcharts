@@ -1,6 +1,7 @@
 import ApexCharts from 'apexcharts'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { isEqual } from 'lodash'
 
 window.ApexCharts = ApexCharts
 
@@ -99,28 +100,26 @@ export default class Charts extends Component {
 
   componentDidUpdate (prevProps) {
     if (!this.chart) return null
-    const { options, series, height, width } = this.props
-    const prevOptions = JSON.stringify(prevProps.options)
-    const prevSeries = JSON.stringify(prevProps.series)
-    const currentOptions = JSON.stringify(options)
-    const currentSeries = JSON.stringify(series)
+    const { options: currentOptions, series: currentSeries, height, width } = this.props
+    const prevOptions = prevProps.options
+    const prevSeries = prevProps.series
 
     if (
-      prevOptions !== currentOptions ||
-      prevSeries !== currentSeries ||
+      !isEqual(prevOptions, currentOptions) ||
+      !isEqual(prevSeries, currentSeries) ||
       height !== prevProps.height ||
       width !== prevProps.width
     ) {
-      if (prevSeries === currentSeries) {
+      if (isEqual(prevSeries, currentSeries)) {
         // series has not changed, but options or size have changed
         this.chart.updateOptions(this.getConfig(), false, true, false)
       } else if (
-        prevOptions === currentOptions &&
+        isEqual(prevOptions, currentOptions) &&
         height === prevProps.height &&
         width === prevProps.width
       ) {
         // options or size have not changed, just the series has changed
-        this.chart.updateSeries(series)
+        this.chart.updateSeries(currentSeries)
       } else {
         // both might be changed
         this.chart.updateOptions(this.getConfig(), false, true, false)
