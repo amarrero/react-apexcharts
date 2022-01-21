@@ -1,4 +1,4 @@
-import ApexCharts from 'apexcharts/dist/apexcharts.common'
+import ApexCharts from 'apexcharts'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -113,7 +113,7 @@ export default class Charts extends Component {
     ) {
       if (prevSeries === currentSeries) {
         // series has not changed, but options or size have changed
-        this.chart.updateOptions(this.getConfig())
+        this.chart.updateOptions(this.getConfig(), false, true, false)
       } else if (
         prevOptions === currentOptions &&
         height === prevProps.height &&
@@ -123,7 +123,7 @@ export default class Charts extends Component {
         this.chart.updateSeries(series)
       } else {
         // both might be changed
-        this.chart.updateOptions(this.getConfig())
+        this.chart.updateOptions(this.getConfig(), false, true, false)
       }
     }
   }
