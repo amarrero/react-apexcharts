@@ -17,7 +17,7 @@ export default class Charts extends Component {
   }
 
   render () {
-    const { type, height, width, series, options, ...props } = this.props
+    const { ...props } = this.props
     return React.createElement('div', {
       ref: React.createRef
         ? this.chartRef
@@ -134,8 +134,14 @@ export default class Charts extends Component {
 
 Charts.propTypes = {
   type: PropTypes.string.isRequired,
-  width: PropTypes.any,
-  height: PropTypes.any,
+  width: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   series: PropTypes.array.isRequired,
   options: PropTypes.object.isRequired
 }
