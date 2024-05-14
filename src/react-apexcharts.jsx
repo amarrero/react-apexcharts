@@ -5,6 +5,15 @@ import { isEqual } from 'lodash'
 
 window.ApexCharts = ApexCharts
 
+function omit(obj, keysToRemove) {
+  let newObj = { ...obj }
+  keysToRemove.forEach(key => {
+      delete newObj[key]
+  });
+  return newObj
+}
+
+
 export default class Charts extends Component {
   constructor (props) {
     super(props)
@@ -17,12 +26,12 @@ export default class Charts extends Component {
   }
 
   render () {
-    const { ...props } = this.props
+    const restProps = omit(this.props, Object.keys(Charts.propTypes));
     return React.createElement('div', {
       ref: React.createRef
         ? this.chartRef
         : this.setRef,
-      ...props
+      ...restProps
     })
   }
 
